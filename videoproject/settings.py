@@ -24,7 +24,7 @@ SECRET_KEY = 'wg*kgsb5$ok23k3t%g)^2mf6++v(o(j1d%-vfd0k(@f(@jg(qh'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['v.mypython.me']
+ALLOWED_HOSTS = ['0.0.0.0', '127.0.0.1']
 
 
 # Application definition
@@ -53,6 +53,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'videoproject.videoproj.middleware.RangesMiddleware',    # 用以实现边缓存边播放
 ]
 
 SITE_URL = 'https://v.mypython.me/'
@@ -72,7 +73,7 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'upload').replace('\\','/')
 MEDIA_URL = '/upload/'
 
 # 上传视频最大尺寸
-CHUNKED_UPLOAD_MAX_BYTES = 100000000
+CHUNKED_UPLOAD_MAX_BYTES = 1000000000
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
@@ -111,7 +112,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'video',
 		'USER': 'root',
-		'PASSWORD': '4643830',
+		'PASSWORD': '',
 		'HOST':'127.0.0.1',
 		'PORT':'3306',
     }
@@ -162,3 +163,4 @@ STATICFILES_DIRS = (
 
 
 # STATIC_ROOT = os.path.join(BASE_DIR, "static/")
+
