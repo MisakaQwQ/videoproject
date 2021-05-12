@@ -30,7 +30,10 @@ class IndexView(generic.ListView):
         self.c = self.request.GET.get("c", None)
         if self.c:
             classification = get_object_or_404(Classification, pk=self.c)
-            return classification.video_set.all().order_by('-create_time')
+            user = self.request.user
+            if user and user.is_staff:
+                return classification.video_set.all().order_by('-create_time')
+            return classification.video_set.all().filter(status=0).order_by('-create_time')
         else:
             return Video.objects.filter(status=0).order_by('-create_time')
 
@@ -62,6 +65,11 @@ class VideoDetailView(generic.DetailView):
 
     def get_object(self, queryset=None):
         obj = super().get_object()
+        if '1' == obj.status:
+            user = self.request.user
+            if not user.is_staff:
+                self.template_name = 'video/detail_deny.html'
+                return obj
         obj.increase_view_count()
         return obj
 

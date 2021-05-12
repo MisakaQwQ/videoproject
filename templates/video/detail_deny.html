@@ -1,0 +1,33 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load video_tag %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/dropload.css' %}">
+{% endblock css %}
+
+{% block content %}
+<div class="ui unstackable two column grid">
+    <div class=" ten wide column">
+        <h1>
+            您无查看权限
+        </h1>
+    </div>
+    <div class="six wide column">
+        {% include "video/recommend.html" %}
+        {% include "video/ad.html" %}
+    </div>
+</div>
+{% endblock content %}
+
+{% block javascript %}
+
+<script>
+var comments_url = "{% url 'comment:get_comments' %}"
+var video_id = {{ video.id }}
+</script>
+
+<script src="{% static 'js/dropload.js' %}"></script>
+<script src="{% static 'js/load_comments.js' %}"></script>
+<script src="{% static 'js/detail.js' %}"></script>
+{% endblock javascript %}
+ 
